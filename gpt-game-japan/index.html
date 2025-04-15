@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Прототип Хаба: Кибер-Мистик</title>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@400;500;600&display=swap"
+		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+	<div class="hub-container">
+		<header class="hud">
+			<div class="player-info"><span class="level-icon">🏆</span> Ур: <span id="player-level">5</span> | ОС: <span
+					id="player-sync-points">1250</span> / <span id="sync-points-to-next">2000</span></div>
+			<div class="system-status"><span id="system-message">> Модуль overview активен. Ожидание команды...</span>
+			</div>
+			<div class="main-menu-button"><button class="btn btn-icon">☰</button></div>
+		</header>
+		<main class="hub-main">
+			<nav class="hub-navigation">
+				<button class="btn nav-btn active" data-target="overview"> <span class="icon">👁️</span> Обзор /
+					Прогресс </button>
+				<button class="btn nav-btn" data-target="lessons"> <span class="icon">⛩️</span> Следующий Урок </button>
+				<button class="btn nav-btn" data-target="srs"> <span class="icon">🧘</span> SRS-Повторение </button>
+				<button class="btn nav-btn" data-target="quests"> <span class="icon">📜</span> Квесты / Испытания
+				</button>
+				<button class="btn nav-btn" data-target="profile"> <span class="icon">👤</span> Профиль / Свитки
+				</button>
+				<button class="btn nav-btn" data-target="settings"> <span class="icon">⚙️</span> Настройки </button>
+			</nav>
+			<section class="hub-content-area">
+				<div id="overview-content" class="content-section active">
+					<h2>Путь Постижения</h2>
+					<p class="system-ai-text">> Анализ прогресса... Следующий узел: Храм Частиц 「の」. Требуемый уровень:
+						6.</p>
+					<div class="progress-visual">
+						<div class="techno-core">
+							    <!-- ВНУТРИ .techno-core -->
+    <!-- Плоский Свиток-Эмиттер СЛЕВА -->
+    <div class="scroll-emitter-simple">
+        <div class="scroll-body"></div>
+        <div class="scroll-cap scroll-cap-top"></div>
+        <div class="scroll-cap scroll-cap-bottom"></div>
+        <div class="scroll-light"></div> <!-- Элемент свечения -->
+    </div>
+
+    <!-- Соединяющий Луч (Простой) -->
+    <div class="light-beam-simple"></div>
+
+    <!-- Плоская Голограмма-Экран СПРАВА -->
+    <div class="info-hologram-simple">
+        <!-- Контент остается тот же -->
+        <div class="holo-content">
+            <div class="holo-level">Уровень: <span id="holo-player-level">5</span></div>
+            <div class="holo-sync">ОС: <span id="holo-player-sync">1250</span> / <span id="sync-to-next">2000</span></div>
+            <div class="progress-bar-container">
+                 <div class="progress-bar-fill" style="width: 62.5%;"></div>
+            </div>
+        </div>
+        <!-- Эффект скан-линий (добавим через CSS) -->
+    </div>
+    <!-- КОНЕЦ вставки -->
+						</div>
+					</div>
+					<div class="quick-stats">
+						<div>Слов в SRS: <strong>150</strong></div>
+						<div>Кандзи изучено: <strong>35</strong></div>
+						<div>Пройдено уроков: <strong>12</strong></div>
+					</div>
+				</div>
+				<div id="lessons-content" class="content-section">
+					<h2>Загрузка урока...</h2>
+					<div id="lessons-content" class="content-section">
+						<h3 id="lesson-topic-title">Название Темы Урока</h3>
+						<div class="lesson-columns"> <!-- Добавим колонки для удобства -->
+							 <div class="lesson-column lesson-explanation-column">
+								  <h4>Объяснение:</h4>
+								  <div id="lesson-explanation">
+									  <p>Здесь будет объяснение темы от AI...</p>
+								  </div>
+							 </div>
+							 <div class="lesson-column lesson-words-column">
+								   <h4>Новые слова:</h4>
+								   <ul id="lesson-new-words">
+									   <li>Слово 1</li>
+									   <li>Слово 2</li>
+								   </ul>
+							 </div>
+						</div>
+						<div class="lesson-exercise-section">
+							<h4>Задание:</h4>
+							<div id="lesson-exercise">
+								<p>Здесь будет вопрос или задание...</p>
+							</div>
+							<div id="lesson-options">
+								<!-- Кнопки опций будут добавляться сюда динамически -->
+							</div>
+							<p id="lesson-feedback" class="feedback"></p>
+						</div>
+						 <!-- Можно добавить кнопки навигации урока сюда -->
+						 <!--
+						 <div class="lesson-navigation">
+							 <button onclick="goToPrevLesson()"> < Пред. Шаг </button>
+							 <button onclick="goToNextLesson()"> След. Шаг > </button>
+						 </div>
+						 -->
+					</div>
+				</div>
+				<div id="srs-content" class="content-section">
+					<h2>SRS-Тренажер</h2>
+				</div>
+				<div id="quests-content" class="content-section">
+					<h2>Доступные Квесты</h2>
+				</div>
+				<div id="profile-content" class="content-section">
+					<h2>Профиль Игрока</h2>
+				</div>
+				<div id="settings-content" class="content-section">
+					<h2>Настройки Игры</h2>
+				</div>
+			</section>
+		</main>
+	</div>
+
+	
+<!-- ПОДКЛЮЧАЕМ ЛОГИКУ УРОКА -->
+<script src="scripts/lesson_logic.js"></script>
+	<!-- Скрипт для интерактивности Хаба И ЗАПУСКА ЭФФЕКТОВ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOMContentLoaded event fired. Initializing..."); // <<<< НАЧАЛЬНЫЙ ЛОГ
+
+            // --- Переключение вкладок (Твой код) ---
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const contentSections = document.querySelectorAll('.content-section');
+            const systemMessage = document.getElementById('system-message');
+            if (navButtons.length > 0 && contentSections.length > 0) {
+                console.log("Tab navigation elements found.");
+                navButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const targetId = button.dataset.target;
+                        if(systemMessage) systemMessage.textContent = `> Загрузка модуля: ${targetId}...`;
+                        navButtons.forEach(btn => btn.classList.remove('active'));
+                        contentSections.forEach(section => section.classList.remove('active'));
+                        button.classList.add('active');
+                        const targetSection = document.getElementById(`${targetId}-content`);
+                        if (targetSection) {
+                            targetSection.classList.add('active');
+                            setTimeout(() => {
+                                if(systemMessage) systemMessage.textContent = `> Модуль ${targetId} активен. Ожидание команды...`;
+                             }, 300);
+                        } else {
+                            console.error(`Content section for target "${targetId}" not found!`);
+                            if(systemMessage) systemMessage.textContent = `> Ошибка: Модуль ${targetId} не найден.`;
+                        }
+                    });
+                });
+            } else {
+                 console.warn("Tab navigation buttons or content sections not found.");
+             }
+
+            // --- Запуск Matrix Rain ---
+// --- УДАЛИТЬ или ЗАКОММЕНТИРОВАТЬ ЭТОТ БЛОК ---
+/*
+console.log("Trying to start matrix rain effect...");
+if (typeof startMatrix === 'function') {
+    try {
+        startMatrix();
+        console.log("startMatrix function called successfully.");
+    } catch (error) { console.error("Error executing startMatrix:", error); }
+} else {
+    console.error("CRITICAL: startMatrix function is NOT defined or not found!");
+}
+*/
+// --- КОНЕЦ УДАЛЕНИЯ/КОММЕНТИРОВАНИЯ ---
+            console.log("Initialization script finished."); // <<< ФИНАЛЬНЫЙ ЛОГ
+        });
+    </script>
+    <!-- Подключение внешних скриптов должно быть ПОСЛЕ этого блока, если они не нужны раньше -->
+    <!-- <script src="matrix_rain.js"></script> --> <!-- Перенес его ПЕРЕД скриптом инициализации! -->
+
+</body>
+
+</html>

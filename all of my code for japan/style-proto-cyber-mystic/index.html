@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прототип Хаба: Кибер-Мистик</title>
+    <!-- Подключаем шрифты -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Основной контейнер Хаба -->
+    <div class="hub-container">
+
+        <!-- Верхняя панель (HUD) - если нужна -->
+        <header class="hud">
+            <div class="player-info">
+                <span class="level-icon">🏆</span> Ур: <span id="player-level">5</span> | XP: <span id="player-xp">1250</span> / <span id="xp-to-next">2000</span>
+            </div>
+            <div class="system-status">
+                <span id="system-message">> Ожидание команды...</span>
+            </div>
+            <div class="main-menu-button">
+                <button class="btn btn-icon">☰</button> <!-- Кнопка основного меню игры -->
+            </div>
+        </header>
+
+        <!-- Центральная область Хаба -->
+        <main class="hub-main">
+
+            <!-- Левая колонка (Навигация/Меню) -->
+            <nav class="hub-navigation">
+                <button class="btn nav-btn active" data-target="overview">
+                    <span class="icon">👁️</span> Обзор / Прогресс
+                </button>
+                <button class="btn nav-btn" data-target="lessons">
+                    <span class="icon">⛩️</span> Следующий Урок
+                </button>
+                <button class="btn nav-btn" data-target="srs">
+                    <span class="icon">🧘</span> SRS-Повторение
+                </button>
+                <button class="btn nav-btn" data-target="quests">
+                    <span class="icon">📜</span> Квесты / Испытания
+                </button>
+                 <button class="btn nav-btn" data-target="profile">
+                    <span class="icon">👤</span> Профиль / Свитки
+                </button>
+                 <button class="btn nav-btn" data-target="settings">
+                    <span class="icon">⚙️</span> Настройки
+                </button>
+            </nav>
+
+            <!-- Правая область (Отображение контента) -->
+            <section class="hub-content-area">
+                <!-- Сюда будем подставлять контент в зависимости от выбора в навигации -->
+                <!-- Пример для "Обзор / Прогресс" -->
+                <div id="overview-content" class="content-section active">
+                    <h2>Путь Постижения</h2>
+                    <p class="system-ai-text">> Анализ прогресса... Следующий узел: Храм Частиц 「の」. Требуемый уровень: 6.</p>
+                    <div class="progress-visual">
+                        <div class="progress-sphere">
+                            <div class="sphere-inner">
+                                <div class="sphere-glow"></div>
+                                <div class="sphere-content">
+                                    <div class="sphere-level">Уровень 5</div>
+                                    <div class="sphere-xp">1250/2000 XP</div>
+                                    <div class="sphere-next">Следующий: 6</div>
+                                </div>
+                            </div>
+                            <div class="sphere-rings">
+                                <div class="ring ring-1"></div>
+                                <div class="ring ring-2"></div>
+                                <div class="ring ring-3"></div>
+                            </div>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" style="width: 62.5%;"></div>
+                        </div>
+                    </div>
+                    <div class="quick-stats">
+                        <div>Слов в SRS: <strong>150</strong></div>
+                        <div>Кандзи изучено: <strong>35</strong></div>
+                        <div>Пройдено уроков: <strong>12</strong></div>
+                    </div>
+                </div>
+
+                <!-- Заглушки для других секций (будут скрыты) -->
+                <div id="lessons-content" class="content-section"><h2>Загрузка урока...</h2></div>
+                <div id="srs-content" class="content-section"><h2>SRS-Тренажер</h2></div>
+                <div id="quests-content" class="content-section"><h2>Доступные Квесты</h2></div>
+                <div id="profile-content" class="content-section"><h2>Профиль Игрока</h2></div>
+                 <div id="settings-content" class="content-section"><h2>Настройки Игры</h2></div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Скрипт для базовой интерактивности прототипа (переключение вкладок) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const contentSections = document.querySelectorAll('.content-section');
+            const systemMessage = document.getElementById('system-message');
+
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetId = button.dataset.target;
+
+                    // Обновляем статус системы (просто для примера)
+                    if(systemMessage) systemMessage.textContent = `> Загрузка модуля: ${targetId}...`;
+
+                    // Убираем active класс со всех кнопок и секций
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    contentSections.forEach(section => section.classList.remove('active'));
+
+                    // Добавляем active класс нужной кнопке и секции
+                    button.classList.add('active');
+                    const targetSection = document.getElementById(`${targetId}-content`);
+                    if (targetSection) {
+                        targetSection.classList.add('active');
+                         // Имитация завершения загрузки
+                         setTimeout(() => {
+                            if(systemMessage) systemMessage.textContent = `> Модуль ${targetId} активен. Ожидание команды...`;
+                         }, 300);
+                    } else {
+                        if(systemMessage) systemMessage.textContent = `> Ошибка: Модуль ${targetId} не найден.`;
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- Подключаем скрипт для частиц -->
+    <script src="particles.js"></script>
+
+</body>
+</html>

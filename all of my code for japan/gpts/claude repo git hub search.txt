@@ -1,0 +1,207 @@
+# Японский Учитель (Japanese Teacher) - Project Documentation
+
+## Project Overview
+
+"Японский Учитель" is an interactive web application designed to teach Japanese language to Russian-speaking users. The application follows a gamified approach to language learning, with a focus on progressive lessons, interactive exercises, and AI-powered content generation. The application is structured to teach Japanese from beginner level (JLPT N5) up to intermediate level (JLPT N4), following the popular "Minna no Nihongo" textbook methodology.
+
+## Architecture
+
+### Frontend Components
+
+The application is built as a single-page web application with the following key components:
+
+1. **Top Navigation Bar**
+   - Menu dropdown with access to:
+     - Homework (Домашние задания)
+     - Dictionary (Словарь)
+     - Kanji Dictionary (Канзи-словарь)
+     - Statistics (Статистика)
+   - Progress bar showing current level and XP
+   - User profile access
+
+2. **Main Content Area** (Three-panel layout)
+   - Left sidebar: AI Teacher explanations
+   - Center panel: Current lesson content and exercises
+   - Right sidebar: New vocabulary words
+
+3. **Exercise Types**
+   - Multiple choice questions (`multipleChoice`)
+   - Fill-in-the-blank questions (`fillInBlank`)
+
+4. **Progress System**
+   - XP-based level progression
+   - Visual feedback on answers (correct/incorrect)
+
+### Technical Stack
+
+- **Frontend**: HTML5, CSS3, and pure JavaScript (no frameworks)
+- **AI Integration**: Google Gemini API (previously known as Google Bard/PaLM)
+- **Data Persistence**: Local storage for saving user progress
+
+## Key Files and Their Functions
+
+### HTML Structure (`index.html`)
+
+The main HTML file defines the application layout with:
+- Top navigation bar with level progress
+- Three-column layout (teacher explanations, main content, vocabulary)
+- Loading indicators and feedback elements
+- Basic menu items (currently non-functional placeholders)
+
+### Styling (`styles/style.css`)
+
+The application uses a dark theme with yellow accents:
+- Dark background (`#121212`) with light text (`#e0e0e0`)
+- Yellow highlights (`#ffcc00`) for buttons and headings
+- Responsive design elements for the three-panel layout
+- Custom styling for:
+  - Progress bar
+  - Exercise options
+  - Correct/incorrect answer indicators
+  - Loading animations
+
+### Application Logic (`scripts/app.js`)
+
+The JavaScript file handles:
+
+1. **Data Management**
+   - Lesson structure definition
+   - Progress tracking (XP, level, completed lessons)
+   - Local storage integration for persistence
+
+2. **UI Management**
+   - DOM element references and updates
+   - Exercise rendering based on type (multiple choice or fill-in-blank)
+   - Progress bar and level display updates
+
+3. **Exercise Logic**
+   - Answer checking and feedback
+   - XP calculation and awarding
+   - Level progression
+
+4. **AI Integration**
+   - API calls to Google Gemini
+   - JSON parsing of AI responses
+   - Error handling for API communication
+
+5. **Navigation**
+   - Lesson progression controls
+   - State management between lessons
+
+### Lesson Data Structure (`scripts/data.js`)
+
+Defines initial content structure with:
+- Lesson IDs and titles
+- Grammar explanations
+- Exercise arrays with different types
+- Initial user data template
+
+## Content Generation System
+
+The application leverages Google Gemini's AI capabilities to dynamically generate lesson content following a specific JSON structure:
+
+```json
+{
+  "explanation": "Grammar and vocabulary explanation in Russian",
+  "exercise": {
+    "type": "multipleChoice" or "fillInBlank",
+    "question": "Exercise question",
+    "options": [...],
+    "correctAnswer": "For fillInBlank exercises"
+  },
+  "newWords": [
+    "Japanese word (reading) - translation"
+  ],
+  "xp": 15
+}
+```
+
+The prompt engineering ensures the AI produces:
+1. Contextually appropriate language explanations
+2. Exercises that test the explained concepts
+3. Relevant vocabulary with readings and translations
+4. Appropriate XP rewards based on difficulty
+
+## User Experience Flow
+
+1. **Lesson Loading**
+   - User sees loading indicators when transitioning between lessons
+   - AI generates personalized content based on the current lesson topic
+   - Content is rendered in the appropriate panels
+
+2. **Learning Process**
+   - User reads the AI-generated explanation in the left panel
+   - Reviews the lesson content in the center panel
+   - Examines new vocabulary in the right panel
+
+3. **Exercise Completion**
+   - User selects an answer from the options provided
+   - Receives immediate visual feedback (green for correct, red for incorrect)
+   - For incorrect answers, the correct option is highlighted
+   - XP is awarded for correct answers (only once per exercise)
+
+4. **Progress Tracking**
+   - XP accumulates toward level advancement
+   - Previously completed exercises are tracked to prevent duplicate XP awards
+   - Progress is automatically saved to local storage
+
+## Error Handling
+
+The application implements robust error handling for various scenarios:
+
+1. **API Communication Errors**
+   - Network connectivity issues
+   - API key validation
+   - Response format inconsistencies
+
+2. **Content Parsing Errors**
+   - Invalid JSON responses
+   - Missing required fields
+   - Unexpected data formats
+
+3. **User Interface Fallbacks**
+   - Meaningful error messages displayed to users
+   - Graceful degradation when AI content is unavailable
+
+## Future Development Opportunities
+
+Based on the codebase, potential enhancements could include:
+
+1. **Content Expansion**
+   - Additional lesson topics beyond basic greetings
+   - More exercise types (writing, listening, sentence construction)
+   - Grammar point reference library
+
+2. **Technical Improvements**
+   - Backend integration for centralized progress tracking
+   - User authentication system
+   - Content caching to reduce API calls
+
+3. **Feature Additions**
+   - Speaking practice with speech recognition
+   - Writing practice with handwriting recognition
+   - Spaced repetition system for vocabulary retention
+   - Community features for learner interaction
+
+4. **Implementation of Placeholder Functionality**
+   - Homework assignment system
+   - Dictionary and Kanji lookup tools
+   - Detailed performance statistics
+
+## Security Considerations
+
+Current security concerns:
+
+1. **API Key Exposure**
+   - The Google Gemini API key is currently embedded in frontend code
+   - This should be moved to server-side processing or environment variables
+
+2. **Data Persistence**
+   - User progress is only stored locally
+   - Progress could be lost if browser data is cleared
+
+## Conclusion
+
+"Японский Учитель" presents an innovative approach to language learning by combining traditional structured content with AI-generated personalized lessons. The application successfully implements a gamified learning experience with immediate feedback and progression mechanics, making Japanese language study more engaging and accessible to Russian-speaking learners.
+
+The modular design allows for straightforward expansion of content and features, while the AI integration provides scalability without requiring manual content creation for every lesson.

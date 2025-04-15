@@ -1,0 +1,497 @@
+/* style.css - Прототип Хаба: Кибер-Мистик */
+
+/* 1. CSS Переменные */
+:root {
+	--bg-color-dark: #0A0E1A;
+	--bg-color-medium: #1C1F2B;
+	--bg-color-light: #2B2E3C;
+	--panel-bg-color: rgba(20, 20, 30, 0.8);
+	--panel-backdrop-blur: 8px;
+	--panel-border-color: rgba(0, 240, 255, 0.3);
+	--panel-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+  
+	--text-color-primary: #EAEAEA;
+	--text-color-secondary: #A0A0B8;
+	--text-color-system: #00F0FF;
+  
+	--accent-color-primary: #00F0FF;
+	--accent-color-secondary: #FF00CC;
+	--accent-color-warning: #FFD500;
+	--accent-color-danger: #FF0033;
+  
+	--correct-color: #33FF99;
+	--incorrect-color: var(--accent-color-secondary);
+  
+	--glow-primary: 0 0 10px var(--accent-color-primary);
+	--glow-secondary: 0 0 15px var(--accent-color-secondary);
+	--glow-warning: 0 0 15px var(--accent-color-warning);
+	--text-glow-primary: 0 0 5px rgba(0, 240, 255, 0.6);
+	--text-glow-secondary: 0 0 8px rgba(255, 0, 204, 0.6);
+  
+	--button-bg-primary: var(--accent-color-primary);
+	--button-text-primary: var(--bg-color-dark);
+	--button-shadow-primary: 0 0 10px var(--accent-color-primary);
+  
+	--button-bg-secondary: transparent;
+	--button-border-secondary: var(--accent-color-primary);
+	--button-text-secondary: var(--accent-color-primary);
+  
+	--button-bg-hover: var(--accent-color-secondary);
+	--button-shadow-hover: 0 0 20px var(--accent-color-secondary);
+	--button-text-hover: #FFFFFF;
+  
+	--font-main: 'Inter', sans-serif;
+	--font-headings: 'Orbitron', sans-serif;
+}
+
+/* 2. Базовые Стили */
+body {
+	margin: 0;
+	padding: 0;
+	background-color: var(--bg-color-dark);
+	color: var(--text-color-primary);
+	font-family: var(--font-main);
+	min-height: 100vh;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* 3. Основной Контейнер Хаба */
+.hub-container {
+	width: 95%;
+	height: 90vh;
+	max-width: 1600px;
+	max-height: 900px;
+	background-color: rgba(11, 15, 26, 0.5);
+	border-radius: 15px;
+	border: 1px solid var(--panel-border-color);
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 240, 255, 0.1);
+	display: flex;
+	flex-direction: column;
+	position: relative;
+  }
+  
+  /* Добавляем эффект сетки на фон */
+  body::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-image: 
+	  linear-gradient(rgba(0, 240, 255, 0.1) 1px, transparent 1px),
+	  linear-gradient(90deg, rgba(0, 240, 255, 0.1) 1px, transparent 1px);
+	background-size: 20px 20px;
+	pointer-events: none;
+	opacity: 0.3;
+  }
+  
+  /* Добавляем эффект частиц */
+  body::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-image: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.1) 0%, transparent 50%);
+	animation: pulse 4s infinite alternate;
+	pointer-events: none;
+  }
+  
+  @keyframes pulse {
+	from { opacity: 0.3; }
+	to { opacity: 0.6; }
+  }
+  
+  /* 3. Основной Контейнер Хаба */
+  .hub-container {
+	width: 95%;
+	height: 90vh;
+	max-width: 1600px;
+	max-height: 900px;
+	/* УЛУЧШЕНО: Убираем фон контейнера, т.к. фон body теперь сложный */
+	/* background-color: rgba(11, 15, 26, 0.5); */
+	border-radius: 15px;
+	border: 1px solid var(--panel-border-color);
+	box-shadow: 0 0 40px rgba(0, 0, 0, 0.7), inset 0 0 25px rgba(0, 240, 255, 0.1); /* Усилено */
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+  }
+  
+  /* 4. Верхняя Панель (HUD) */
+  .hud {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 25px;
+	background-color: rgba(11, 15, 26, 0.6); /* Чуть темнее и прозрачнее */
+	backdrop-filter: blur(var(--panel-backdrop-blur));
+	border-bottom: 1px solid var(--panel-border-color);
+	flex-shrink: 0;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Усилено */
+  }
+  
+  .player-info { /* Оставляем как есть */ }
+  .player-info .level-icon { /* Оставляем как есть */ }
+  .player-info span { /* Оставляем как есть */ }
+  
+  .system-status {
+	font-family: 'Orbitron', sans-serif;
+	font-size: 0.9em;
+	color: var(--text-color-system);
+	text-shadow: var(--text-glow-primary);
+	padding: 8px 15px;
+	background: rgba(0, 240, 255, 0.05);
+	border: 1px solid rgba(0, 240, 255, 0.2);
+	border-radius: 4px;
+	animation: pulseGlow 3s infinite alternate;
+  }
+  
+  @keyframes pulseGlow {
+	from { text-shadow: 0 0 5px rgba(0, 240, 255, 0.5); opacity: 0.8; }
+	to { text-shadow: 0 0 10px rgba(0, 240, 255, 0.8); opacity: 1; }
+  }
+  
+  .main-menu-button .btn-icon { /* Стили как были */ }
+  .main-menu-button .btn-icon:hover { /* Стили как были */ }
+  
+  
+  /* 5. Основная Область Хаба */
+  .hub-main {
+	display: flex;
+	flex-grow: 1;
+	overflow: hidden;
+  }
+  
+  /* 6. Левая Навигация */
+  .hub-navigation {
+	flex-basis: 220px; /* Чуть шире */
+	flex-shrink: 0;
+	padding: 25px 20px;
+	background-color: rgba(11, 15, 26, 0.4);
+	border-right: 1px solid var(--panel-border-color);
+	display: flex;
+	flex-direction: column;
+	gap: 12px; /* Немного увеличим */
+	overflow-y: auto;
+  }
+  
+  .nav-btn {
+	/* ... стили как были ... */
+	padding: 14px 20px; /* Чуть больше */
+	transition: all var(--transition-speed) ease; /* Используем переменную */
+  }
+  .nav-btn .icon {
+	  /* ... стили как были ... */
+	  transition: all var(--transition-speed) ease;
+  }
+  
+  .nav-btn:hover {
+	background-color: rgba(0, 240, 255, 0.1);
+	color: var(--text-color-primary);
+	border-color: var(--panel-border-color);
+	/* УЛУЧШЕНО: Более явный ховер */
+	transform: translateX(5px);
+	box-shadow: inset 3px 0 8px -2px rgba(0, 240, 255, 0.2);
+  }
+  .nav-btn:hover .icon {
+	  opacity: 1;
+	  text-shadow: var(--glow-primary);
+	  transform: scale(1.1); /* Иконка увеличивается */
+  }
+  
+  .nav-btn.active {
+	background-color: rgba(0, 240, 255, 0.2); /* Ярче активный фон */
+	color: #fff;
+	font-weight: bold;
+	border-left: 4px solid var(--accent-color-primary); /* Ярче линия */
+	box-shadow: inset 5px 0 15px -5px rgba(0, 240, 255, 0.3); /* Ярче тень */
+	transform: translateX(0); /* Сбрасываем сдвиг ховера */
+  }
+  .nav-btn.active .icon {
+	  opacity: 1;
+	  color: var(--accent-color-primary);
+	  text-shadow: var(--glow-primary);
+	  transform: scale(1.1);
+  }
+  
+  /* 7. Область Контента Хаба */
+  .hub-content-area {
+	flex-grow: 1;
+	padding: 35px 45px; /* Увеличим отступы */
+	position: relative;
+	overflow-y: auto;
+	background-color: var(--panel-bg-color); /* Добавим фон и сюда */
+	backdrop-filter: blur(var(--panel-backdrop-blur));
+  }
+  
+  .content-section {
+	display: none;
+	/* УЛУЧШЕНО: Более плавная анимация появления */
+	animation: contentFadeIn 0.6s ease-out forwards;
+  }
+  .content-section.active { display: block; }
+  
+  @keyframes contentFadeIn {
+	from { opacity: 0; transform: translateY(20px) scale(0.98); }
+	to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  
+  
+  .content-section h2 {
+	/* ... стили как были ... */
+	text-shadow: var(--glow-primary);
+	font-size: 2em; /* Крупнее */
+	margin-bottom: 30px;
+  }
+  
+  /* УЛУЧШЕНО: Стили для секции "Обзор" */
+  #overview-content .system-ai-text {
+	  /* ... стили как были ... */
+	  background-color: rgba(0, 240, 255, 0.08); /* Немного ярче фон */
+	  border-left: 3px solid var(--accent-color-primary);
+	  box-shadow: inset 3px 0 8px -3px rgba(0, 240, 255, 0.15);
+  }
+  
+  .progress-visual {
+	  min-height: 200px;
+	  border: 1px solid var(--panel-border-color);
+	  background: linear-gradient(145deg, rgba(28, 28, 40, 0.5), rgba(43, 46, 60, 0.5));
+	  box-shadow: var(--panel-shadow);
+	  position: relative;
+	  overflow: hidden;
+  }
+  
+  .progress-visual::before {
+	  content: '';
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  right: 0;
+	  bottom: 0;
+	  background: 
+		  linear-gradient(45deg, transparent 48%, rgba(0, 240, 255, 0.1) 50%, transparent 52%),
+		  linear-gradient(-45deg, transparent 48%, rgba(0, 240, 255, 0.1) 50%, transparent 52%);
+	  background-size: 20px 20px;
+	  opacity: 0.3;
+	  animation: scan 4s linear infinite;
+  }
+  
+  @keyframes scan {
+	  from { background-position: 0 0; }
+	  to { background-position: 20px 20px; }
+  }
+  
+  .progress-visual p { /* Заглушка для Древа/Сферы */
+	  font-size: 1.2em;
+	  color: var(--text-color-secondary);
+	  opacity: 0.5;
+	  margin-bottom: 30px;
+  }
+  
+  .progress-bar-container {
+	  width: 70%; /* Чуть уже */
+	  height: 18px; /* Толще */
+	  background-color: rgba(11, 15, 26, 0.7); /* Темнее фон */
+	  border-radius: 9px;
+	  border: 1px solid var(--panel-border-color);
+	  box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .progress-bar-fill {
+	  height: 100%;
+	  background: linear-gradient(90deg, var(--accent-color-primary) 0%, var(--accent-color-secondary) 100%);
+	  border-radius: 9px;
+	  box-shadow: 0 0 8px var(--accent-color-primary), 0 0 15px var(--accent-color-secondary); /* Добавляем свечение */
+	  transition: width 0.8s cubic-bezier(0.25, 1, 0.5, 1); /* Более плавная анимация */
+  }
+  
+  .quick-stats {
+	  /* ... стили как были ... */
+	  margin-top: 40px;
+	  padding-top: 25px;
+	  border-top: 1px solid var(--panel-border-color);
+	  color: var(--text-color-secondary);
+	  font-size: 1em; /* Чуть крупнее */
+  }
+  .quick-stats strong {
+	  color: var(--accent-color-warning); /* Используем янтарный для цифр */
+	  font-size: 1.4em;
+	  text-shadow: var(--glow-warning);
+  }
+  
+  
+  /* Общие стили кнопок */
+  .btn { /* Добавляем базовые стили */
+	padding: 10px 15px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-weight: bold;
+	transition: all var(--transition-speed) ease;
+	border: 1px solid transparent;
+	text-transform: uppercase; /* Для техно-стиля */
+	letter-spacing: 0.5px;
+  }
+  
+  /* Стили для скроллбара */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: rgba(11, 15, 26, 0.5); }
+  ::-webkit-scrollbar-thumb { background: var(--accent-color-primary); border-radius: 4px; border: 1px solid var(--bg-color-dark); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent-color-secondary); box-shadow: var(--glow-secondary); }
+
+  /* Стили для сферы прогресса */
+  .progress-sphere {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 30px;
+    perspective: 1000px;
+  }
+
+  .sphere-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: sphereRotate 20s linear infinite;
+  }
+
+  .sphere-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, 
+        rgba(0, 240, 255, 0.2) 0%,
+        rgba(0, 240, 255, 0.1) 30%,
+        transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    filter: blur(10px);
+    animation: pulseGlow 3s infinite alternate;
+  }
+
+  .sphere-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 2;
+  }
+
+  .sphere-level {
+    font-family: var(--font-headings);
+    font-size: 1.5em;
+    color: var(--text-color-system);
+    text-shadow: var(--text-glow-primary);
+    margin-bottom: 10px;
+  }
+
+  .sphere-xp {
+    font-size: 0.9em;
+    color: var(--text-color-secondary);
+    margin-bottom: 5px;
+  }
+
+  .sphere-next {
+    font-size: 0.8em;
+    color: var(--text-color-secondary);
+    opacity: 0.8;
+  }
+
+  .sphere-rings {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .ring-1 {
+    animation: ringRotate1 8s linear infinite;
+  }
+
+  .ring-2 {
+    animation: ringRotate2 12s linear infinite reverse;
+    transform: translate(-50%, -50%) rotateX(60deg);
+  }
+
+  .ring-3 {
+    animation: ringRotate3 15s linear infinite;
+    transform: translate(-50%, -50%) rotateY(60deg);
+  }
+
+  @keyframes sphereRotate {
+    from { transform: rotateY(0) rotateX(0); }
+    to { transform: rotateY(360deg) rotateX(360deg); }
+  }
+
+  @keyframes ringRotate1 {
+    from { transform: translate(-50%, -50%) rotateZ(0); }
+    to { transform: translate(-50%, -50%) rotateZ(360deg); }
+  }
+
+  @keyframes ringRotate2 {
+    from { transform: translate(-50%, -50%) rotateX(60deg) rotateZ(0); }
+    to { transform: translate(-50%, -50%) rotateX(60deg) rotateZ(360deg); }
+  }
+
+  @keyframes ringRotate3 {
+    from { transform: translate(-50%, -50%) rotateY(60deg) rotateZ(0); }
+    to { transform: translate(-50%, -50%) rotateY(60deg) rotateZ(360deg); }
+  }
+
+  /* Создаем частицы */
+  .particle {
+    position: fixed;
+    background: rgba(0, 240, 255, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+    animation: float 15s infinite linear;
+  }
+
+  .particle::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border-radius: inherit;
+    filter: blur(2px);
+  }
+
+  /* Анимация для частиц */
+  @keyframes float {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx, 100px), var(--ty, 100px)) rotate(360deg);
+        opacity: 0;
+    }
+  }

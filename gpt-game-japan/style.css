@@ -1,0 +1,817 @@
+/* --- START OF CSS - PART 1 --- */
+
+/* --- START OF FILE style.css (Полная Версия v5 - Фиксы Голограммы, Улучшения 3D) --- */
+
+/* style.css - Прототип Хаба: Кибер-Мистик */
+
+/* 1. CSS Переменные */
+:root {
+	/* Основные цвета */
+	--bg-color-dark: #0A0E1A;
+	--bg-color-medium: #1C1F2B;
+	--bg-color-light: #2B2E3C;
+
+	/* Цвета панелей и эффекты */
+	--panel-bg-color: rgba(20, 20, 30, 0.85);
+	--panel-backdrop-blur: 10px;
+	--panel-border-color: rgba(0, 240, 255, 0.3);
+	--panel-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+	--panel-inner-glow: inset 0 0 12px rgba(0, 240, 255, 0.15);
+
+	/* Цвета текста */
+	--text-color-primary: #EAEAEA;
+	--text-color-secondary: #A0A0B8;
+	--text-color-system: var(--accent-color-primary);
+	--text-color-stats-label: #C0C0D8;
+
+	/* Акцентные цвета ИНТЕРФЕЙСА */
+	--accent-color-primary: #00F0FF;
+	/* Циан */
+	--accent-color-secondary: #FF00CC;
+	/* Фуксия */
+	--accent-color-warning: #FFD500;
+	/* Янтарь */
+	--accent-color-danger: #FF0033;
+
+	/* Цвета для статусов */
+	--correct-color: #33FF99;
+	--incorrect-color: var(--accent-color-secondary);
+
+	/* Свечение ИНТЕРФЕЙСА */
+	--glow-primary: 0 0 8px var(--accent-color-primary);
+	--glow-secondary: 0 0 12px var(--accent-color-secondary);
+	--glow-warning: 0 0 10px var(--accent-color-warning);
+	--hover-glow: var(--glow-secondary);
+
+	/* Свечение ТЕКСТА */
+	--text-glow-primary: 0 0 5px rgba(0, 240, 255, 0.8);
+	--text-glow-secondary: 0 0 8px rgba(255, 0, 204, 0.7);
+	--text-glow-warning: 0 0 6px rgba(255, 213, 0, 0.9);
+	--hover-text-glow: var(--text-glow-secondary);
+
+	/* Кнопки Вторичные (для навигации) */
+	--button-bg-secondary: transparent;
+	--button-border-secondary: rgba(0, 240, 255, 0.2);
+	--button-text-secondary: var(--text-color-secondary);
+
+	/* Кнопки Ховер (Фуксия) */
+	--hover-bg-semi: rgba(255, 0, 204, 0.15);
+	--hover-shadow: 0 0 15px var(--accent-color-secondary);
+	--hover-text: #FFFFFF;
+	--hover-border: var(--accent-color-secondary);
+	--hover-icon-color: var(--accent-color-secondary);
+	--hover-inset-shadow: inset 3px 0 8px -2px rgba(255, 0, 204, 0.3);
+
+	/* Шрифты */
+	--font-main: 'Inter', sans-serif;
+	--font-headings: 'Orbitron', sans-serif;
+	--transition-speed: 0.25s;
+
+}
+
+/* 2. Базовые Стили */
+body {
+	margin: 0;
+	padding: 0;
+	background-color: var(--bg-color-dark);
+	color: var(--text-color-primary);
+	font-family: var(--font-main);
+	min-height: 100vh;
+	overflow: hidden;
+	position: relative;
+	z-index: 0;
+}
+
+
+
+/* --- END OF CSS - PART 1 --- */
+
+/* --- START OF CSS - PART 2 --- */
+
+/* 3. Основной Контейнер Хаба */
+.hub-container {
+	width: 95%;
+	height: 90vh;
+	max-width: 1600px;
+	max-height: 900px;
+	border-radius: 15px;
+	border: 1px solid var(--panel-border-color);
+	box-shadow: var(--panel-shadow), var(--panel-inner-glow);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: transparent;
+	/* Фон задается внутренними панелями */
+	z-index: 1;
+	/* Над фоном (matrix-canvas) */
+}
+
+/* 4. Верхняя Панель (HUD) */
+.hud {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 12px 25px;
+	/* Вертикальный паддинг */
+	background-color: var(--panel-bg-color);
+	/* Полупрозрачный фон */
+	backdrop-filter: blur(var(--panel-backdrop-blur));
+	/* Размытие под панелью */
+	border-bottom: 1px solid var(--panel-border-color);
+	/* Разделительная линия */
+	flex-shrink: 0;
+	/* Не сжимается по вертикали */
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+	/* Тень под панелью */
+	position: relative;
+	/* Для z-index */
+	z-index: 2;
+	/* HUD выше остального контента в .hub-container */
+}
+
+.player-info {
+	font-size: 0.9em;
+}
+
+.player-info .level-icon {
+	font-size: 1.1em;
+	margin-right: 5px;
+	vertical-align: middle;
+}
+
+.player-info span {
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+#player-level {
+	color: var(--accent-color-warning);
+}
+
+/* Янтарный */
+#player-sync-points {
+	color: var(--text-color-primary);
+}
+
+/* Белые цифры ОС */
+#sync-points-to-next {
+	color: var(--text-color-secondary);
+	opacity: 0.7;
+}
+
+/* Следующие ОС тусклее */
+
+.system-status {
+	font-family: var(--font-headings);
+	/* Техно-шрифт */
+	font-size: 0.9em;
+	color: var(--text-color-system);
+	/* Цвет = Циан */
+	text-shadow: var(--text-glow-primary);
+	/* Свечение текста */
+	padding: 8px 15px;
+	background: rgba(0, 240, 255, 0.08);
+	/* Легкий циан фон */
+	border: 1px solid rgba(0, 240, 255, 0.2);
+	/* Циан рамка */
+	border-radius: 4px;
+	animation: pulseGlow 3s infinite alternate;
+	/* Анимация пульсации */
+}
+
+@keyframes pulseGlow {
+	from {
+		text-shadow: var(--text-glow-primary);
+		opacity: 0.8;
+		box-shadow: 0 0 5px rgba(0, 240, 255, 0.1);
+	}
+
+	to {
+		text-shadow: 0 0 10px var(--accent-color-primary);
+		opacity: 1;
+		box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+	}
+}
+
+.main-menu-button {
+	position: relative;
+}
+
+/* Для возможного меню */
+.main-menu-button .btn-icon {
+	background: transparent;
+	border: 1px solid var(--button-border-secondary);
+	/* Рамка как у кнопок */
+	color: var(--button-text-secondary);
+	/* Текст вторичный */
+	padding: 8px 12px;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: all var(--transition-speed) ease;
+	font-size: 1.2em;
+	line-height: 1;
+	text-shadow: var(--text-glow-primary);
+	/* Свечение Циан */
+}
+
+.main-menu-button .btn-icon:hover {
+	/* Ховер Фуксия */
+	background-color: var(--hover-bg-semi);
+	color: var(--hover-text);
+	border-color: var(--hover-border);
+	box-shadow: var(--hover-shadow);
+	text-shadow: var(--hover-text-glow);
+}
+
+/* --- END OF CSS - PART 2 --- */
+
+/* --- START OF CSS - PART 3 --- */
+
+/* 5. Основная Область Хаба */
+.hub-main {
+	display: flex;
+	/* Располагаем Навигацию и Контент рядом */
+	flex-grow: 1;
+	/* Занимает оставшееся место по высоте */
+	overflow: hidden;
+	/* Обрезаем все, что выходит за границы */
+}
+
+/* 6. Левая Навигация */
+.hub-navigation {
+	flex-basis: 230px;
+	/* Фиксированная ширина */
+	flex-shrink: 0;
+	/* Не сжимается по ширине */
+	padding: 25px 15px;
+	/* Отступы */
+	background-color: var(--panel-bg-color);
+	/* Тот же фон и блюр, что у HUD */
+	backdrop-filter: blur(var(--panel-backdrop-blur));
+	border-right: 1px solid var(--panel-border-color);
+	/* Разделитель справа */
+	display: flex;
+	flex-direction: column;
+	/* Кнопки друг под другом */
+	gap: 12px;
+	/* Пространство между кнопками */
+	overflow-y: auto;
+	/* Добавляем скролл, если кнопки не влезают по высоте */
+	z-index: 1;
+	/* Чуть выше области контента, если понадобится перекрытие */
+}
+
+/* Кнопки Навигации */
+.nav-btn {
+	background: var(--button-bg-secondary);
+	/* Прозрачный фон по умолчанию */
+	border: 1px solid var(--button-border-secondary);
+	/* Тусклая рамка */
+	color: var(--button-text-secondary);
+	/* Тусклый текст */
+	padding: 14px 20px;
+	/* Отступы внутри кнопки */
+	border-radius: 5px;
+	cursor: pointer;
+	font-weight: 500;
+	/* Не жирный */
+	transition: all var(--transition-speed) ease;
+	/* Плавные переходы */
+	display: flex;
+	align-items: center;
+	/* Иконка и текст по центру */
+	gap: 12px;
+	/* Расстояние между иконкой и текстом */
+	text-transform: none;
+	/* Без UPPERCASE */
+	letter-spacing: normal;
+	/* Обычный межбуквенный интервал */
+	font-size: 0.95em;
+	/* Текст чуть меньше */
+}
+
+.nav-btn .icon {
+	font-size: 1.3em;
+	/* Размер иконки */
+	line-height: 1;
+	/* Выравнивание иконки */
+	opacity: 0.7;
+	/* Неактивная иконка тусклая */
+	transition: all var(--transition-speed) ease;
+	/* Плавное изменение иконки */
+}
+
+/* Ховер на НЕ активную кнопку (Фуксия) */
+.nav-btn:not(.active):hover {
+	background-color: var(--hover-bg-semi);
+	/* Полупрозрачный фуксия фон */
+	color: var(--hover-text);
+	/* Белый текст */
+	border-color: var(--hover-border);
+	/* Фуксия рамка */
+	transform: translateX(5px);
+	/* Легкий сдвиг вправо */
+	box-shadow: var(--hover-inset-shadow), var(--hover-shadow);
+	/* Внутренняя и внешняя тень/свечение (Фуксия) */
+}
+
+.nav-btn:not(.active):hover .icon {
+	opacity: 1;
+	/* Иконка становится яркой */
+	text-shadow: var(--hover-text-glow);
+	/* Фуксия свечение текста */
+	transform: scale(1.1);
+	/* Иконка увеличивается */
+	color: var(--hover-icon-color);
+	/* Иконка становится Фуксией */
+}
+
+/* Активная кнопка (Циан) */
+.nav-btn.active {
+	background: linear-gradient(90deg, rgba(0, 240, 255, 0.2), rgba(0, 240, 255, 0.1));
+	/* Циан градиент */
+	color: #fff;
+	/* Белый текст */
+	font-weight: bold;
+	/* Жирный текст */
+	border: 1px solid var(--accent-color-primary);
+	/* Яркая Циан рамка */
+	border-left: 4px solid var(--accent-color-primary);
+	/* Яркая полоса слева */
+	box-shadow: inset 5px 0 15px -5px rgba(0, 240, 255, 0.4), var(--glow-primary);
+	/* Внутренняя и внешняя Циан тень/свечение */
+	transform: translateX(0);
+	/* Сбрасываем сдвиг */
+}
+
+.nav-btn.active .icon {
+	opacity: 1;
+	/* Яркая иконка */
+	color: var(--accent-color-primary);
+	/* Иконка Циан */
+	text-shadow: var(--text-glow-primary);
+	/* Свечение Циан */
+	transform: scale(1.1);
+	/* Увеличение */
+}
+
+/* --- END OF CSS - PART 3 --- */
+
+/* --- START OF CSS - PART 4 --- */
+
+/* 7. Область Контента Хаба */
+.hub-content-area {
+	flex-grow: 1;
+	/* Занимает оставшееся место по ширине */
+	padding: 35px 45px;
+	/* Внутренние отступы */
+	position: relative;
+	/* Для возможного позиционирования элементов внутри */
+	overflow-y: auto;
+	/* Вертикальный скролл, если контент не влез */
+	background-color: var(--panel-bg-color);
+	/* Тот же фон, что у навигации и HUD */
+	backdrop-filter: blur(var(--panel-backdrop-blur));
+	/* Размытие фона */
+	border-left: 1px solid var(--panel-border-color);
+	/* Разделитель слева */
+	/* perspective и transform-style удалены отсюда, используются ниже */
+}
+
+/* Стилизация секций контента */
+.content-section {
+	display: none;
+	/* По умолчанию все секции скрыты */
+	/* Анимация появления активной секции */
+	animation: contentFadeIn 0.4s ease-out forwards;
+}
+
+.content-section.active {
+	display: block;
+}
+
+/* Показываем только активную секцию */
+
+/* Анимация появления */
+@keyframes contentFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(15px);
+	}
+
+	/* Начинаем прозрачными и снизу */
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	/* Плавно появляемся на месте */
+}
+
+/* Общие стили для Заголовков секций */
+.content-section h2 {
+	font-family: var(--font-headings);
+	/* Техно-шрифт Orbitron */
+	color: var(--text-color-primary);
+	/* Основной цвет текста */
+	text-shadow: var(--text-glow-primary);
+	/* Циан свечение */
+	font-size: 2.2em;
+	/* Размер заголовка */
+	margin-top: 0;
+	/* Убираем верхний отступ по умолчанию */
+	margin-bottom: 30px;
+	/* Отступ снизу */
+	border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+	/* Циан разделитель */
+	padding-bottom: 15px;
+	/* Отступ до разделителя */
+}
+
+/* Стилизация блока текста от "AI" в секции Обзор */
+#overview-content .system-ai-text {
+	font-family: monospace;
+	/* Моноширинный шрифт для вида "консоли" */
+	background-color: rgba(0, 240, 255, 0.08);
+	/* Легкий Циан фон */
+	border-left: 3px solid var(--accent-color-primary);
+	/* Яркая Циан полоса слева */
+	padding: 15px 20px;
+	/* Внутренние отступы */
+	margin-bottom: 30px;
+	/* Отступ снизу */
+	color: var(--text-color-secondary);
+	/* Вторичный цвет текста */
+	font-size: 0.95em;
+	/* Чуть меньше основного */
+	line-height: 1.6;
+	/* Межстрочный интервал */
+	box-shadow: inset 3px 0 8px -3px rgba(0, 240, 255, 0.2);
+	/* Внутренняя тень для глубины */
+	border-radius: 0 4px 4px 0;
+	/* Небольшое скругление справа */
+}
+
+/* Добавляем символ ">" перед текстом AI */
+#overview-content .system-ai-text::before {
+	content: '> ';
+	color: var(--text-color-system);
+	/* Цвет = Циан */
+	font-weight: bold;
+}
+
+/* --- END OF CSS - PART 4 --- */
+
+/* --- START OF CSS - PART 5 --- */
+
+/* === 8. БЛОК: КРИСТАЛЛ + ГОЛОГРАММА v5 === */
+
+.progress-visual {
+	position: relative;
+	margin-bottom: 40px;
+	padding: 20px 0;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	/* Разделитель под блоком */
+	min-height: 280px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	/* Перспектива для всей сцены */
+}
+
+.techno-core {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 80px;
+	/* Увеличил расстояние */
+	width: 90%;
+	max-width: 750px;
+	position: relative;
+	/* Включаем 3D */
+	/* border: 1px dashed yellow; Отладка */
+}
+
+/* Контейнер для локальной перспективы кристалла */
+
+/* Контейнер для вращения 3D кристалла и орбит */
+
+/* Сам 3D Кристалл (стилизованный обелиск) */
+
+/* Псевдоэлементы для имитации граней кристалла */
+
+/* Правая грань (повернута) */
+
+/* Левая грань (повернута) */
+
+/* Орбиты для Осколков (вращающиеся плоскости) */
+
+/* Параметры для каждой орбиты (длительность, задержка, углы наклона, радиус, цвет) */
+
+/* Анимация вращения орбиты */
+
+
+/* Сам Осколок */
+
+/* Голограмма (Информационная панель) */
+
+/* Псевдоэлемент для внутреннего свечения по контуру (имитация стекла) */
+
+/* Анимация пульсации рамки голограммы */
+
+/* Псевдоэлемент для скан-линий */
+
+/* Анимация скан-линий */
+
+
+/* Эмиттер голограммы (Справа) */
+
+/* Световой элемент на конце эмиттера */
+
+/* Анимация свечения эмиттера */
+
+/* Псевдоэлемент для имитации луча от эмиттера к голограмме */
+
+/* Анимация пульсации луча */
+
+/* Контент внутри Голограммы */
+
+/* Текст над скан-линиями и свечением */
+
+
+
+/* Прогресс-бар внутри голограммы */
+
+
+
+/* Анимация мерцания Голограммы */
+
+
+/* --- END OF CSS - PART 5 --- */
+
+/* --- START OF CSS - PART 6 --- */
+
+/* 9. Quick Stats (Статистика внизу) */
+.quick-stats {
+	display: flex;
+	justify-content: space-around;
+	/* Равномерно распределяем */
+	align-items: center;
+	/* Выравниваем по центру */
+	margin-top: 40px;
+	/* Отступ сверху */
+	color: var(--text-color-stats-label);
+	/* Цвет подписей */
+	font-size: 1em;
+	/* Базовый размер текста */
+	padding-top: 25px;
+	/* Отступ над статистикой */
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	/* Разделитель сверху */
+}
+
+.quick-stats>div {
+	text-align: center;
+	/* Текст и цифра по центру */
+}
+
+.quick-stats strong {
+	display: block;
+	/* Цифра будет над текстом */
+	color: var(--accent-color-warning);
+	/* Цвет цифр - Янтарь */
+	font-size: 2em;
+	/* Размер цифр */
+	font-weight: bold;
+	font-family: var(--font-headings);
+	/* Шрифт Orbitron для цифр */
+	text-shadow: var(--text-glow-warning);
+	/* Свечение цифр - Янтарь */
+	margin-bottom: 5px;
+	/* Отступ под цифрой */
+}
+
+/* Общие стили базовых кнопок (если нужны где-то еще) */
+.btn {
+	padding: 10px 15px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-weight: bold;
+	transition: all var(--transition-speed) ease;
+	border: 1px solid transparent;
+	/* Без рамки по умолчанию */
+	text-transform: uppercase;
+	/* Большие буквы */
+	letter-spacing: 0.5px;
+	/* Разрядка букв */
+	/* Настройки фона/цвета зависят от конкретного модификатора (как у .nav-btn) */
+}
+
+/* Стили для скроллбара */
+::-webkit-scrollbar {
+	width: 10px;
+	/* Ширина */
+}
+
+::-webkit-scrollbar-track {
+	background: rgba(11, 15, 26, 0.5);
+	/* Фон под скроллом */
+	border-radius: 5px;
+	/* Скругление */
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--accent-color-primary);
+	/* Бегунок - Циан */
+	border-radius: 5px;
+	border: 2px solid var(--bg-color-medium);
+	/* Рамка вокруг бегунка */
+	box-shadow: var(--glow-primary);
+	/* Свечение Циан */
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--accent-color-secondary);
+	/* Ховер бегунка - Фуксия */
+	box-shadow: var(--glow-secondary);
+	/* Свечение Фуксия */
+}
+/* --- START OF CSS - PART (Новые Стили v7 - Плоский Свиток + Голограмма) --- */
+
+/* === 8. НОВЫЙ БЛОК ВИЗУАЛИЗАЦИИ (УПРОЩЕННЫЙ) === */
+
+/* Контейнер выравнивает элементы */
+.techno-core {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Центрируем по горизонтали */
+    gap: 40px; /* Расстояние между свитком и голограммой */
+    width: 100%;
+    /* Убираем 3D */
+    /* transform-style: preserve-3d; */
+}
+
+/* --- Плоский Свиток-Эмиттер --- */
+.scroll-emitter-simple {
+    width: 60px; /* Ширина свитка */
+    height: 200px; /* Высота свитка */
+    position: relative;
+    flex-shrink: 0; /* Не сжиматься */
+    /* filter: drop-shadow(0 0 10px var(--accent-color-secondary)); /* Легкое свечение фуксией? */
+}
+/* Тело свитка (основа) */
+.scroll-body {
+    position: absolute;
+    top: 20px; /* Отступ для колпачков */
+    bottom: 20px;
+    left: 10px; /* Отступ от краев */
+    right: 10px;
+    background: linear-gradient(to right, #283040, #384458); /* Темно-серый/синий металл */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+}
+/* Колпачки сверху и снизу */
+.scroll-cap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 25px; /* Высота колпачка */
+    background: linear-gradient(#556070, #303844); /* Более светлый металл */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 2px 3px rgba(0,0,0,0.3);
+}
+.scroll-cap-top {
+    top: 0;
+    border-radius: 8px 8px 0 0;
+}
+.scroll-cap-bottom {
+    bottom: 0;
+    border-radius: 0 0 8px 8px;
+}
+/* Светящийся элемент на свитке */
+.scroll-light {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 15px;
+    height: 40px; /* Вытянутый */
+    background: var(--accent-color-secondary); /* Фуксия */
+    border-radius: 3px;
+    box-shadow: 0 0 12px 3px var(--accent-color-secondary); /* Фуксия свечение */
+    animation: scrollLightPulse 2s infinite alternate ease-in-out;
+}
+@keyframes scrollLightPulse {
+    from { box-shadow: 0 0 10px 2px var(--accent-color-secondary); opacity: 0.8;}
+    to   { box-shadow: 0 0 18px 5px var(--accent-color-secondary); opacity: 1;}
+}
+
+/* --- Соединяющий Луч (Простой) --- */
+.light-beam-simple {
+    width: 60px; /* Длина луча */
+    height: 3px; /* Толщина луча */
+    background: linear-gradient(to right,
+        color-mix(in srgb, var(--accent-color-secondary) 80%, transparent), /* От свитка (фуксия) */
+        color-mix(in srgb, var(--accent-color-primary) 80%, transparent) /* К голограмме (циан) */
+    );
+    opacity: 0.7;
+    flex-shrink: 0;
+    position: relative; /* Для возможной анимации */
+    animation: beamPulse 2.5s infinite alternate;
+}
+@keyframes beamPulse {
+     from { opacity: 0.6; filter: blur(1px); }
+     to   { opacity: 0.9; filter: blur(2px); }
+}
+
+
+/* --- Плоская Голограмма-Экран --- */
+.info-hologram-simple {
+    position: relative;
+    width: 320px; /* Ширина экрана */
+    padding: 20px 25px; /* Паддинги */
+    background: color-mix(in srgb, var(--panel-bg-color) 90%, transparent); /* Используем фон панели, но чуть прозрачнее */
+    border: 1px solid var(--panel-border-color); /* Тонкая циан рамка */
+    border-radius: 8px; /* Обычное скругление */
+    box-shadow: var(--panel-inner-glow), var(--glow-primary); /* Внутреннее и внешнее Циан свечение */
+    backdrop-filter: blur(var(--panel-backdrop-blur)); /* Размытие фона */
+    flex-shrink: 0;
+    overflow: hidden; /* Обрезаем скан-линии */
+}
+/* Скан-линии */
+.info-hologram-simple::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(rgba(0, 240, 255, 0.08) 1px, transparent 1px);
+    background-size: 100% 4px; opacity: 0.6; pointer-events: none;
+    animation: scanlinesSimple 7s linear infinite;
+    z-index: 0; /* Под контентом */
+}
+@keyframes scanlinesSimple { from { background-position-y: 0px; } to { background-position-y: -80px; } }
+
+/* Контент внутри голограммы */
+.info-hologram-simple .hologram-content {
+    position: relative; /* Над псевдоэлементом */
+    z-index: 1;
+}
+/* Стили для .holo-level, .holo-sync, .progress-bar-container, .progress-bar-fill остаются ТЕ ЖЕ, что были внутри старой голограммы */
+.info-hologram-simple .holo-level { font-family: var(--font-headings); font-size: 1.8em; color: #fff; text-shadow: var(--text-glow-primary); margin-bottom: 8px; text-align: center; }
+.info-hologram-simple .holo-level #holo-player-level { color: var(--accent-color-primary); font-size: 1.2em; margin-left: 7px; }
+.info-hologram-simple .holo-sync { font-size: 1.0em; color: var(--text-color-secondary); margin-bottom: 15px; text-align: center; letter-spacing: 0.5px; }
+.info-hologram-simple .holo-sync #holo-player-sync { color: var(--text-color-primary); font-weight: bold; }
+.info-hologram-simple .holo-sync #sync-to-next { opacity: 0.8; }
+.info-hologram-simple .progress-bar-container { width: 95%; height: 14px; margin-top: 10px; margin-left: auto; margin-right: auto; border-radius: 7px; border: 1px solid rgba(0, 240, 255, 0.4); background-color: rgba(10, 20, 30, 0.9); }
+.info-hologram-simple .progress-bar-fill { border-radius: 6px; height: 100%; background: linear-gradient(90deg, var(--accent-color-primary) 0%, var(--accent-color-secondary) 100%); box-shadow: 0 0 5px var(--accent-color-primary), 0 0 10px var(--accent-color-secondary); position: relative; overflow: hidden; }
+/* Анимация блика для бара */
+.info-hologram-simple .progress-bar-fill::after { content: ''; position: absolute; top: 0; left: -100%; width: 80%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent); animation: progressBarShineSimple 3s infinite linear; opacity: 0.7;}
+@keyframes progressBarShineSimple { 0% { left: -100%; } 50%, 100% { left: 150%; } }
+
+
+/* --- КОНЕЦ НОВЫХ СТИЛЕЙ --- */
+
+/* --- END OF CSS - PART 6 --- */
+
+/* --- END OF FILE style.css (Полная Версия v5) --- */
+
+/* Добавь в style.css */
+#lessons-content h3 { /* Стили для заголовка темы урока */
+    font-family: var(--font-headings);
+    color: var(--accent-color-primary);
+    text-shadow: var(--text-glow-primary);
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+    padding-bottom: 10px;
+}
+.lesson-columns { display: flex; gap: 30px; margin-bottom: 30px; }
+.lesson-column { flex: 1; }
+.lesson-column h4, .lesson-exercise-section h4 {
+    color: var(--text-color-secondary);
+    font-size: 0.9em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 5px;
+}
+#lesson-explanation, #lesson-new-words { font-size: 0.95em; line-height: 1.6; }
+#lesson-new-words { list-style: none; padding: 0; }
+#lesson-new-words li { padding: 3px 0; }
+#lesson-exercise p { margin-top: 0; margin-bottom: 15px; }
+#lesson-options { margin-bottom: 15px; }
+.lesson-option-btn { /* Стили для кнопок опций */
+    display: block; width: 100%; text-align: left;
+    margin: 8px 0; padding: 12px 15px;
+    background-color: rgba(var(--bg-color-light-rgb, 43, 46, 60), 0.7); /* Используем RGB переменные, если есть */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-color-primary); border-radius: 4px; cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+.lesson-option-btn:hover:not(:disabled) { background-color: rgba(var(--bg-color-light-rgb, 43, 46, 60), 1.0); border-color: var(--accent-color-primary); }
+.lesson-option-btn.correct { background-color: rgba(51, 255, 153, 0.2); border-color: var(--correct-color); color: #fff; }
+.lesson-option-btn.incorrect { background-color: rgba(255, 0, 204, 0.15); border-color: var(--incorrect-color); color: #fff; }
+.lesson-option-btn:disabled { opacity: 0.7; cursor: default; }
+#lesson-feedback.feedback { min-height: 1.2em; font-weight: bold; margin-top: 10px; }
+#lesson-feedback.correct { color: var(--correct-color); }
+#lesson-feedback.incorrect { color: var(--incorrect-color); }
